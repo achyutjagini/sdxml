@@ -1,0 +1,189 @@
+﻿--Set the deferred segment creation to false so that the sequences can work correctly
+ALTER SYSTEM SET deferred_segment_creation=false;
+
+--Create a user in order to get a schema for the tables. Must start with c## in Oracle Database 21c.
+CREATE USER c##bookdb IDENTIFIED BY abc123;
+
+--Give permissions to the schema so that the tables can be created
+GRANT RESOURCE TO c##bookdb;
+GRANT UNLIMITED TABLESPACE TO c##bookdb;
+
+--Change the default schema so that we don't have to prefix everything with "c##bookdb."
+ALTER SESSION SET CURRENT_SCHEMA=c##bookdb;
+
+CREATE SEQUENCE author_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE author (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name VARCHAR2(20) NOT NULL UNIQUE,
+  info XMLTYPE NOT NULL
+);
+
+INSERT INTO author VALUES (author_id_seq.nextval,'John Craft','<Info><Email>jc@jc.com</Email><Country>England</Country><YearOfBirth>1948</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Arnie Bastoft','<Info><Email>bastoft@frei.at</Email><Country>Austria</Country><YearOfBirth>1971</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Meg Gilmand','<Info><Email>megil@archeo.org</Email><Country>Australia</Country><YearOfBirth>1968</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Chris Ryan','<Info><Email>chris@egypt.eg</Email><Country>France</Country><YearOfBirth>1944</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Alan Griff','<Info><Email>ag@mit.edu</Email><Country>USA</Country><YearOfBirth>1972</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Marty Faust','<Info><Email>marty@nyu.edu</Email><Country>USA</Country><YearOfBirth>1970</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Celine Biceau','<Info><Email>celine.biceau@tok.cn</Email><Country>Canada</Country><YearOfBirth>1969</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Carl Sagan','<Info><Email>carlsagan@nasa.gov</Email><Country>USA</Country><YearOfBirth>1913</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Leslie Brenner','<Info><Email>leslie@yahoo.com</Email><Country>USA</Country><YearOfBirth>1945</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Jakob Hanson','<Info><Email>jh22@hotmail.com</Email><Country>Sweden</Country><YearOfBirth>1946</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Mimi Pappas','<Info><Email>mimi@music.com</Email><Country>USA</Country><YearOfBirth>1972</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Marie Franksson','<Info><Email>franksson@bok.se</Email><Country>Sweden</Country><YearOfBirth>1937</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Pierre Zargone','<Info><Email>zargone@fans.be</Email><Country>Belgium</Country><YearOfBirth>1968</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Carl George','<Info><Email>cg@eu.int</Email><Country>France</Country><YearOfBirth>1939</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Peter Feldon','<Info><Email>pf@eu.int</Email><Country>England</Country><YearOfBirth>1917</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Lilian Carrera','<Info><Email>lc@eu.int</Email><Country>Spain</Country><YearOfBirth>1922</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Auna Gonzales Perre','<Info><Email>agp@eu.int</Email><Country>Portugal</Country><YearOfBirth>1942</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Kostas Andrianos','<Info><Email>ka@eu.int</Email><Country>Greece</Country><YearOfBirth>1936</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Andreas Shultz','<Info><Email>as@eu.int</Email><Country>Austria</Country><YearOfBirth>1919</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Antje Liedderman','<Info><Email>al@eu.int</Email><Country>Germany</Country><YearOfBirth>1950</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Christina Ohlsen','<Info><Email>co@eu.int</Email><Country>Norway</Country><YearOfBirth>1933</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Sam Davis','<Info><Email>sd@music.com</Email><Country>Mexico</Country><YearOfBirth>1939</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Alicia Bing','<Info><Email>bing@bing.be</Email><Country>Belgium</Country><YearOfBirth>1952</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Linda Evans','<Info><Email>levans@ocean.uot.edu</Email><Country>USA</Country><YearOfBirth>1966</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Chuck Morrisson','<Info><Email>morrisson@home.to</Email><Country>England</Country><YearOfBirth>1963</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Kay Morrisson','<Info><Email>morrisson@home.to</Email><Country>England</Country><YearOfBirth>1969</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'James Patterson','<Info><Email>jp@hotmail.com</Email><Country>USA</Country><YearOfBirth>1955</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Peter de Jonge','<Info><Email>pj@mail.com</Email><Country>USA</Country><YearOfBirth>1961</YearOfBirth></Info>');
+INSERT INTO author VALUES (author_id_seq.nextval,'Franc Desteille','<Info><Email>franc@chateau.fr</Email><Country>France</Country><YearOfBirth>1925</YearOfBirth></Info>');
+
+
+CREATE SEQUENCE book_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE book (
+  id INTEGER NOT NULL PRIMARY KEY,
+  title VARCHAR2(50) NOT NULL UNIQUE,
+  originallanguage VARCHAR2(20) NOT NULL,
+  genre VARCHAR2(20)
+);
+
+INSERT INTO book VALUES (book_id_seq.nextval,'Misty Nights','English','Thriller');
+INSERT INTO book VALUES (book_id_seq.nextval,'Archeology in Egypt','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'Database Systems in Practice','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'Contact','English','Science Fiction');
+INSERT INTO book VALUES (book_id_seq.nextval,'The Fourth Star','English','Science Fiction');
+INSERT INTO book VALUES (book_id_seq.nextval,'The Fifth Star','English','Novel');
+INSERT INTO book VALUES (book_id_seq.nextval,'Våren vid sjön','Swedish','Novel');
+INSERT INTO book VALUES (book_id_seq.nextval,'Dödliga Data','Swedish','Thriller');
+INSERT INTO book VALUES (book_id_seq.nextval,'Music Now and Before','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'Midsommar i Lund','Swedish','Novel');
+INSERT INTO book VALUES (book_id_seq.nextval,'Encore une fois','French',NULL);
+INSERT INTO book VALUES (book_id_seq.nextval,'European History','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'Musical Instruments','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'Oceans on Earth','English','Educational');
+INSERT INTO book VALUES (book_id_seq.nextval,'The Beach House','English','Novel');
+INSERT INTO book VALUES (book_id_seq.nextval,'Le chateau de mon pere','French',NULL);
+INSERT INTO book VALUES (book_id_seq.nextval,'Oceanography for Dummies','English','Educational');
+
+CREATE SEQUENCE edition_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE edition (
+  id INTEGER NOT NULL PRIMARY KEY,
+  year INTEGER NOT NULL,
+  price INTEGER NOT NULL,
+  translations XMLTYPE NOT NULL,
+  book INTEGER NOT NULL,
+  UNIQUE (book, year),
+  FOREIGN KEY (book) REFERENCES book (id)
+);
+
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1987, 120, '<Translations><Translation Language="German" Publisher="Kingsly" Price="130"/><Translation Language="French" Publisher="Addison" Price="135"/><Translation Language="Russian" Publisher="Addison" Price="125"/></Translations>', (SELECT id FROM book WHERE title = 'Misty Nights'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1992, 250, '<Translations><Translation Language="Swedish" Price="340"/><Translation Language="French" Price="320"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1994, 280, '<Translations><Translation Language="Swedish" Publisher="KLC" Price="390"/><Translation Language="French" Publisher="KLC" Price="330"/><Translation Language="Chinese" Publisher="Shou-Ling" Price="280"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1999, 280, '<Translations><Translation Language="French" Publisher="KLC" Price="320"/><Translation Language="Italian" Publisher="KLC" Price="320"/><Translation Language="Turkish" Publisher="Turk And Turk" Price="300"/><Translation Language="Spanish" Price="300"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2000, 430, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Database Systems in Practice'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2002, 440, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Database Systems in Practice'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1988, 140, '<Translations><Translation Language="Swedish" Publisher="SCB" Price="160"/><Translation Language="German" Price="140"/><Translation Language="Russian" Publisher="RP" Price="140"/></Translations>', (SELECT id FROM book WHERE title = 'Contact'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2001, 210, '<Translations><Translation Language="Swedish" Publisher="Bästa Bok" Price="260"/></Translations>', (SELECT id FROM book WHERE title = 'The Fourth Star'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2003, 250, '<Translations><Translation Language="Swedish" Publisher="Bästa Bok" Price="270"/></Translations>', (SELECT id FROM book WHERE title = 'The Fifth Star'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1982, 45, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Våren vid sjön'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1989, 48, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Våren vid sjön'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1993, 120, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Dödliga Data'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1997, 300, '<Translations><Translation Language="German" Publisher="ABC International" Price="310"/><Translation Language="French" Price="310"/><Translation Language="Russian" Price="300"/><Translation Language="Italian" Publisher="KLC" Price="300"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1999, 315, '<Translations><Translation Language="German" Publisher="ABC International" Price="320"/><Translation Language="French" Publisher="ABC International" Price="330"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2001, 335, '<Translations><Translation Language="German" Publisher="ABC International" Price="350"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1988, 75, '<Translations><Translation Language="Finnish" Publisher="Suomi Bookkii" Price="95"/></Translations>', (SELECT id FROM book WHERE title = 'Midsommar i Lund'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1997, 120, '<Translations><Translation Language="English" Price="120"/><Translation Language="Russian" Price="110"/></Translations>', (SELECT id FROM book WHERE title = 'Encore une fois'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2001, 150, '<Translations><Translation Language="English" Publisher="Pels And Jafs" Price="180"/><Translation Language="Russian" Price="140"/></Translations>', (SELECT id FROM book WHERE title = 'Encore une fois'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1998, 650, '<Translations><Translation Language="Greek" Publisher="EU Publishing" Price="650"/><Translation Language="Spanish" Publisher="EU Publishing" Price="650"/><Translation Language="Portuguese" Publisher="EU Publishing" Price="650"/><Translation Language="Italian" Publisher="EU Publishing" Price="650"/><Translation Language="French" Publisher="EU Publishing" Price="650"/><Translation Language="Dutch" Publisher="EU Publishing" Price="650"/><Translation Language="Norwegian" Publisher="EU Publishing" Price="650"/><Translation Language="Swedish" Publisher="EU Publishing" Price="650"/><Translation Language="Finnish" Publisher="EU Publishing" Price="650"/><Translation Language="Danish" Publisher="EU Publishing" Price="650"/><Translation Language="Russian" Publisher="EU Publishing" Price="650"/><Translation Language="Bulgarian" Publisher="EU Publishing" Price="650"/></Translations>', (SELECT id FROM book WHERE title = 'European History'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1991, 300, '<Translations><Translation Language="Portuguese" Publisher="ABC International" Price="300"/><Translation Language="Chinese" Publisher="ABC International" Price="350"/><Translation Language="Russian" Publisher="ABC International" Price="355"/><Translation Language="Italian" Publisher="ABC International" Price="345"/><Translation Language="Spanish" Publisher="ABC International" Price="335"/></Translations>', (SELECT id FROM book WHERE title = 'Musical Instruments'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2001, 500, '<Translations><Translation Language="Dutch" Publisher="ABC International" Price="510"/><Translation Language="German" Publisher="ABC International" Price="510"/><Translation Language="Spanish" Publisher="ABC International" Price="505"/></Translations>', (SELECT id FROM book WHERE title = 'Musical Instruments'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1996, 400, '<Translations><Translation Language="French" Publisher="ABC International" Price="420"/><Translation Language="German" Publisher="ABC International" Price="400"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1998, 420, '<Translations><Translation Language="French" Publisher="ABC International" Price="430"/><Translation Language="Spanish" Publisher="ABC International" Price="420"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2001, 460, '<Translations><Translation Language="Dutch" Publisher="ABC International" Price="500"/><Translation Language="Danish" Publisher="ABC International" Price="530"/><Translation Language="Italian" Publisher="ABC International" Price="510"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2002, 500, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2002, 180, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'The Beach House'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 1964, 65, '<Translations><Translation Language="English" Publisher="Benton Inc" Price="105"/><Translation Language="Spanish" Price="100"/><Translation Language="Greek" Price="100"/><Translation Language="Italian" Publisher="Aurora Publ." Price="95"/><Translation Language="German" Price="100"/></Translations>', (SELECT id FROM book WHERE title = 'Le chateau de mon pere'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2004, 190, '<Translations><Translation Language="Russian" Publisher="ABC International" Price="190"/></Translations>', (SELECT id FROM book WHERE title = 'Oceanography for Dummies'));
+INSERT INTO edition VALUES (edition_id_seq.nextval, 2009, 220, '<Translations><Translation Language="Russian" Publisher="ABC International" Price="220"/></Translations>', (SELECT id FROM book WHERE title = 'Oceanography for Dummies'));
+
+CREATE TABLE authorship (
+  book INTEGER NOT NULL,
+  author INTEGER NOT NULL,
+  PRIMARY KEY (book, author),
+  FOREIGN KEY (book) REFERENCES book (id),
+  FOREIGN KEY (author) REFERENCES author (id)  
+);
+
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Misty Nights'), (SELECT id FROM author WHERE name = 'John Craft'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Arnie Bastoft'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Meg Gilmand'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Chris Ryan'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Alan Griff'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Marty Faust'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Celine Biceau'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Contact'), (SELECT id FROM author WHERE name = 'Carl Sagan'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Fourth Star'), (SELECT id FROM author WHERE name = 'Leslie Brenner'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Fifth Star'), (SELECT id FROM author WHERE name = 'Leslie Brenner'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Våren vid sjön'), (SELECT id FROM author WHERE name = 'Marie Franksson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Dödliga Data'), (SELECT id FROM author WHERE name = 'Jakob Hanson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Music Now and Before'), (SELECT id FROM author WHERE name = 'Sam Davis'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Music Now and Before'), (SELECT id FROM author WHERE name = 'Mimi Pappas'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Midsommar i Lund'), (SELECT id FROM author WHERE name = 'Marie Franksson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Encore une fois'), (SELECT id FROM author WHERE name = 'Pierre Zargone'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Carl George'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Peter Feldon'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Lilian Carrera'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Auna Gonzales Perre'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Kostas Andrianos'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Andreas Shultz'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Antje Liedderman'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Christina Ohlsen'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Musical Instruments'), (SELECT id FROM author WHERE name = 'Sam Davis'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Musical Instruments'), (SELECT id FROM author WHERE name = 'Alicia Bing'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Linda Evans'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Chuck Morrisson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Kay Morrisson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceanography for Dummies'), (SELECT id FROM author WHERE name = 'Linda Evans'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Beach House'), (SELECT id FROM author WHERE name = 'James Patterson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Beach House'), (SELECT id FROM author WHERE name = 'Peter de Jonge'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Le chateau de mon pere'), (SELECT id FROM author WHERE name = 'Franc Desteille'));
+
+
+CREATE TABLE publisher (
+  name VARCHAR2(30) NOT NULL PRIMARY KEY,
+  street VARCHAR2(30) NOT NULL,
+  city VARCHAR2(20) NOT NULL,
+  postalcode VARCHAR2(10) NOT NULL,
+  country VARCHAR2(20) NOT NULL
+);
+
+INSERT INTO publisher VALUES ('ABC International','7th Bear St.','Berlin','44500','Germany');
+INSERT INTO publisher VALUES ('Deutche Ferlage','Frei Strasse 22','Berlin','11123','Germany');
+INSERT INTO publisher VALUES ('Addison','2nd Monet St.','Toulouse','98700','France');
+INSERT INTO publisher VALUES ('Aurora Publ.','3rd Uffizi Rd.','Florence','49112','Italy');
+INSERT INTO publisher VALUES ('Benton Inc','4th Queen Ave.','London','34565','England');
+INSERT INTO publisher VALUES ('McManus Publishing','124 Main street','London','56411','England');
+INSERT INTO publisher VALUES ('Bästa Bok','Bokgatan 9','Stockholm','12309','Sweden');
+INSERT INTO publisher VALUES ('EU Publishing','45th Beer St.','Brussels','34990','Belgium');
+INSERT INTO publisher VALUES ('KLC','Upplandsv. 1','Uppsala','34067','Sweden');
+INSERT INTO publisher VALUES ('Kingsly','98th Waltz St.','Vienna','12369','Austria');
+INSERT INTO publisher VALUES ('Pels And Jafs','32nd Lake Ave.','Edinburg','87300','Scotland');
+INSERT INTO publisher VALUES ('RP','34th Red Square','Saint Petersburg','34005','Russia');
+INSERT INTO publisher VALUES ('SCB','3rd Odengatan','Stockholm','10405','Sweden');
+INSERT INTO publisher VALUES ('Shou-Ling','12th Great Wall St.','Shanghai','12333','China');
+INSERT INTO publisher VALUES ('Suomi Bookkii','4th Yksi Rd.','Helsinki','12003','Finland');
+INSERT INTO publisher VALUES ('Turk And Turk','45th Otoman Ave.','Ankara','23000','Turkey'); 
+INSERT INTO publisher VALUES ('Marco Polo','475 Central Avenue','Saint Petersburg','33701','United States');

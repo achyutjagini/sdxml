@@ -1,0 +1,76 @@
+--Set the deferred segment creation to false so that the sequences can work correclty
+ALTER SYSTEM SET deferred_segment_creation=false;
+
+--Create a user in order to get a schema for the tables. Must start with c## in Oracle Database 21c.
+CREATE USER c##cardb IDENTIFIED BY abc123;
+
+--Give permissions to the schema so that the tables can be created
+GRANT RESOURCE TO c##cardb;
+GRANT UNLIMITED TABLESPACE TO c##cardb;
+
+--Change the default schema so that we don't have to prefix everything with "c##cardb." 
+ALTER SESSION SET CURRENT_SCHEMA=c##cardb;
+
+CREATE SEQUENCE person_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE person(pid INTEGER NOT NULL PRIMARY KEY, 
+name VARCHAR2(30) NOT NULL, 
+yearofbirth INTEGER NOT NULL, 
+employments XMLTYPE);
+
+CREATE TABLE car (licencenumber VARCHAR2(6) NOT NULL PRIMARY KEY, 
+color VARCHAR2(10) NOT NULL, 
+brand VARCHAR2(15) NOT NULL, 
+model VARCHAR2(15) NOT NULL, 
+year INTEGER NOT NULL, 
+owner INTEGER NOT NULL, 
+FOREIGN KEY (owner) REFERENCES person(pid)) ;
+
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'John Higgins',1975,'<root><employment startdate="2001-08-20" enddate="2009-02-28" employer="ABB"/>
+  <employment startdate="2009-04-15" employer="UPC"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Stephen Hendry',1973,'<root><employment startdate="2002-08-20" enddate="2003-06-30" employer="ABB"/>
+  <employment startdate="2003-08-01" employer="UPC"/>
+  <employment startdate="2006-11-01" employer="ABB"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Matthew Stevens',1982,'<root><employment startdate="2003-01-10" employer="UPC"/> </root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Ronnie O''Sullivan',1980,'<root><employment startdate="2002-03-10" enddate="2010-05-22" employer="LKP"/>
+  <employment startdate="2010-08-15" employer="STG"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Ken Doherty',1974,'<root><employment startdate="2002-02-12" enddate="2003-05-11" employer="LKP"/>
+  <employment startdate="2003-05-12" enddate="2003-12-02" employer="ABB"/>
+  <employment startdate="2003-12-06" enddate="2005-02-17" employer="LKP"/>
+  <employment startdate="2005-02-18" enddate="2008-05-16" employer="FFD"/>
+  <employment startdate="2008-06-02" employer="STG"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Steve Davis',1960,'<root><employment startdate="2001-01-05" enddate="2005-12-31" employer="ABB"/>
+  <employment startdate="2006-01-15" enddate="2009-01-22" employer="LKP"/>
+  <employment startdate="2009-02-01" employer="FFD"/>
+  <employment startdate="2009-02-01" employer="XAB"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Paul Hunter',1983,'<root><employment startdate="2004-01-10" enddate="2008-09-29" employer="FFD"/>
+  <employment startdate="2008-10-01" enddate="2010-11-20" employer="LKP"/></root>');
+INSERT INTO person (pid, name, yearofbirth, employments) VALUES
+(person_id_seq.nextval, 'Neil Robertson',1982,'<root><employment startdate="2006-02-03" enddate="2008-10-30" employer="UPC"/>
+  <employment startdate="2008-11-20" employer="ABB"/></root>');
+  
+INSERT INTO car VALUES
+('ABC123','black','NISSAN','Cherry',1998,1);
+INSERT INTO car VALUES
+('CCD457','blue','FIAT','Forza',2001,2);
+INSERT INTO car VALUES
+('DKL998','green','SAAB','9000C',1998,3);
+INSERT INTO car VALUES
+('PTF357','red','VOLVO','V70',2001,6);
+INSERT INTO car VALUES
+('DAVIS1','red','VOLVO','V90',2007,6);
+INSERT INTO car VALUES
+('ROO197','blue','SAAB','900i',1982,5);
+INSERT INTO car VALUES
+('RSQ199','black','NISSAN','Micra',1999,4);
+INSERT INTO car VALUES
+('TYD226','black','NISSAN','Cherry',1990,1);
+INSERT INTO car VALUES
+('WID387','red','FIAT','Nova',2003,3);

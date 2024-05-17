@@ -1,0 +1,182 @@
+﻿CREATE DATABASE bookdb;
+GO
+
+USE bookdb;
+
+CREATE TABLE author (
+  id INTEGER IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  name VARCHAR(20) NOT NULL UNIQUE,
+  info XML NOT NULL
+);
+
+INSERT INTO author (name, info) VALUES
+('John Craft','<Info><Email>jc@jc.com</Email><Country>England</Country><YearOfBirth>1948</YearOfBirth></Info>'),
+('Arnie Bastoft','<Info><Email>bastoft@frei.at</Email><Country>Austria</Country><YearOfBirth>1971</YearOfBirth></Info>'),
+('Meg Gilmand','<Info><Email>megil@archeo.org</Email><Country>Australia</Country><YearOfBirth>1968</YearOfBirth></Info>'),
+('Chris Ryan','<Info><Email>chris@egypt.eg</Email><Country>France</Country><YearOfBirth>1944</YearOfBirth></Info>'),
+('Alan Griff','<Info><Email>ag@mit.edu</Email><Country>USA</Country><YearOfBirth>1972</YearOfBirth></Info>'),
+('Marty Faust','<Info><Email>marty@nyu.edu</Email><Country>USA</Country><YearOfBirth>1970</YearOfBirth></Info>'),
+('Celine Biceau','<Info><Email>celine.biceau@tok.cn</Email><Country>Canada</Country><YearOfBirth>1969</YearOfBirth></Info>'),
+('Carl Sagan','<Info><Email>carlsagan@nasa.gov</Email><Country>USA</Country><YearOfBirth>1913</YearOfBirth></Info>'),
+('Leslie Brenner','<Info><Email>leslie@yahoo.com</Email><Country>USA</Country><YearOfBirth>1945</YearOfBirth></Info>'),
+('Jakob Hanson','<Info><Email>jh22@hotmail.com</Email><Country>Sweden</Country><YearOfBirth>1946</YearOfBirth></Info>'),
+('Mimi Pappas','<Info><Email>mimi@music.com</Email><Country>USA</Country><YearOfBirth>1972</YearOfBirth></Info>'),
+('Marie Franksson','<Info><Email>franksson@bok.se</Email><Country>Sweden</Country><YearOfBirth>1937</YearOfBirth></Info>'),
+('Pierre Zargone','<Info><Email>zargone@fans.be</Email><Country>Belgium</Country><YearOfBirth>1968</YearOfBirth></Info>'),
+('Carl George','<Info><Email>cg@eu.int</Email><Country>France</Country><YearOfBirth>1939</YearOfBirth></Info>'),
+('Peter Feldon','<Info><Email>pf@eu.int</Email><Country>England</Country><YearOfBirth>1917</YearOfBirth></Info>'),
+('Lilian Carrera','<Info><Email>lc@eu.int</Email><Country>Spain</Country><YearOfBirth>1922</YearOfBirth></Info>'),
+('Auna Gonzales Perre','<Info><Email>agp@eu.int</Email><Country>Portugal</Country><YearOfBirth>1942</YearOfBirth></Info>'),
+('Kostas Andrianos','<Info><Email>ka@eu.int</Email><Country>Greece</Country><YearOfBirth>1936</YearOfBirth></Info>'),
+('Andreas Shultz','<Info><Email>as@eu.int</Email><Country>Austria</Country><YearOfBirth>1919</YearOfBirth></Info>'),
+('Antje Liedderman','<Info><Email>al@eu.int</Email><Country>Germany</Country><YearOfBirth>1950</YearOfBirth></Info>'),
+('Christina Ohlsen','<Info><Email>co@eu.int</Email><Country>Norway</Country><YearOfBirth>1933</YearOfBirth></Info>'),
+('Sam Davis','<Info><Email>sd@music.com</Email><Country>Mexico</Country><YearOfBirth>1939</YearOfBirth></Info>'),
+('Alicia Bing','<Info><Email>bing@bing.be</Email><Country>Belgium</Country><YearOfBirth>1952</YearOfBirth></Info>'),
+('Linda Evans','<Info><Email>levans@ocean.uot.edu</Email><Country>USA</Country><YearOfBirth>1966</YearOfBirth></Info>'),
+('Chuck Morrisson','<Info><Email>morrisson@home.to</Email><Country>England</Country><YearOfBirth>1963</YearOfBirth></Info>'),
+('Kay Morrisson','<Info><Email>morrisson@home.to</Email><Country>England</Country><YearOfBirth>1969</YearOfBirth></Info>'),
+('James Patterson','<Info><Email>jp@hotmail.com</Email><Country>USA</Country><YearOfBirth>1955</YearOfBirth></Info>'),
+('Peter de Jonge','<Info><Email>pj@mail.com</Email><Country>USA</Country><YearOfBirth>1961</YearOfBirth></Info>'),
+('Franc Desteille','<Info><Email>franc@chateau.fr</Email><Country>France</Country><YearOfBirth>1925</YearOfBirth></Info>');
+
+
+CREATE TABLE book (
+  id INTEGER IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL UNIQUE,
+  originallanguage VARCHAR(20) NOT NULL,
+  genre VARCHAR(20)
+);
+
+INSERT INTO book (title, originallanguage, genre) VALUES 
+('Misty Nights','English','Thriller'),
+('Archeology in Egypt','English','Educational'),
+('Database Systems in Practice','English','Educational'),
+('Contact','English','Science Fiction'),
+('The Fourth Star','English','Science Fiction'),
+('The Fifth Star','English','Novel'),
+('Våren vid sjön','Swedish','Novel'),
+('Dödliga Data','Swedish','Thriller'),
+('Music Now and Before','English','Educational'),
+('Midsommar i Lund','Swedish','Novel'),
+('Encore une fois','French',NULL),
+('European History','English','Educational'),
+('Musical Instruments','English','Educational'),
+('Oceans on Earth','English','Educational'),
+('The Beach House','English','Novel'),
+('Le chateau de mon pere','French',NULL),
+('Oceanography for Dummies','English','Educational');
+
+
+CREATE TABLE edition (
+  id INTEGER IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  year INTEGER NOT NULL,
+  price INTEGER NOT NULL,
+  translations XML NOT NULL,
+  book INTEGER NOT NULL,
+  UNIQUE (book, year),
+  FOREIGN KEY (book) REFERENCES book (id)
+);
+
+INSERT INTO edition (year, price, translations, book) VALUES
+(1987, 120, '<Translations><Translation Language="German" Publisher="Kingsly" Price="130"/><Translation Language="French" Publisher="Addison" Price="135"/><Translation Language="Russian" Publisher="Addison" Price="125"/></Translations>', (SELECT id FROM book WHERE title = 'Misty Nights')),
+(1992, 250, '<Translations><Translation Language="Swedish" Price="340"/><Translation Language="French" Price="320"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt')),
+(1994, 280, '<Translations><Translation Language="Swedish" Publisher="KLC" Price="390"/><Translation Language="French" Publisher="KLC" Price="330"/><Translation Language="Chinese" Publisher="Shou-Ling" Price="280"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt')),
+(1999, 280, '<Translations><Translation Language="French" Publisher="KLC" Price="320"/><Translation Language="Italian" Publisher="KLC" Price="320"/><Translation Language="Turkish" Publisher="Turk And Turk" Price="300"/><Translation Language="Spanish" Price="300"/></Translations>', (SELECT id FROM book WHERE title = 'Archeology in Egypt')),
+(2000, 430, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Database Systems in Practice')),
+(2002, 440, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Database Systems in Practice')),
+(1988, 140, '<Translations><Translation Language="Swedish" Publisher="SCB" Price="160"/><Translation Language="German" Price="140"/><Translation Language="Russian" Publisher="RP" Price="140"/></Translations>', (SELECT id FROM book WHERE title = 'Contact')),
+(2001, 210, '<Translations><Translation Language="Swedish" Publisher="Bästa Bok" Price="260"/></Translations>', (SELECT id FROM book WHERE title = 'The Fourth Star')),
+(2003, 250, '<Translations><Translation Language="Swedish" Publisher="Bästa Bok" Price="270"/></Translations>', (SELECT id FROM book WHERE title = 'The Fifth Star')),
+(1982, 45, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Våren vid sjön')),
+(1989, 48, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Våren vid sjön')),
+(1993, 120, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Dödliga Data')),
+(1997, 300, '<Translations><Translation Language="German" Publisher="ABC International" Price="310"/><Translation Language="French" Price="310"/><Translation Language="Russian" Price="300"/><Translation Language="Italian" Publisher="KLC" Price="300"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before')),
+(1999, 315, '<Translations><Translation Language="German" Publisher="ABC International" Price="320"/><Translation Language="French" Publisher="ABC International" Price="330"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before')),
+(2001, 335, '<Translations><Translation Language="German" Publisher="ABC International" Price="350"/></Translations>', (SELECT id FROM book WHERE title = 'Music Now and Before')),
+(1988, 75, '<Translations><Translation Language="Finnish" Publisher="Suomi Bookkii" Price="95"/></Translations>', (SELECT id FROM book WHERE title = 'Midsommar i Lund')),
+(1997, 120, '<Translations><Translation Language="English" Price="120"/><Translation Language="Russian" Price="110"/></Translations>', (SELECT id FROM book WHERE title = 'Encore une fois')),
+(2001, 150, '<Translations><Translation Language="English" Publisher="Pels And Jafs" Price="180"/><Translation Language="Russian" Price="140"/></Translations>', (SELECT id FROM book WHERE title = 'Encore une fois')),
+(1998, 650, '<Translations><Translation Language="Greek" Publisher="EU Publishing" Price="650"/><Translation Language="Spanish" Publisher="EU Publishing" Price="650"/><Translation Language="Portuguese" Publisher="EU Publishing" Price="650"/><Translation Language="Italian" Publisher="EU Publishing" Price="650"/><Translation Language="French" Publisher="EU Publishing" Price="650"/><Translation Language="Dutch" Publisher="EU Publishing" Price="650"/><Translation Language="Norwegian" Publisher="EU Publishing" Price="650"/><Translation Language="Swedish" Publisher="EU Publishing" Price="650"/><Translation Language="Finnish" Publisher="EU Publishing" Price="650"/><Translation Language="Danish" Publisher="EU Publishing" Price="650"/><Translation Language="Russian" Publisher="EU Publishing" Price="650"/><Translation Language="Bulgarian" Publisher="EU Publishing" Price="650"/></Translations>', (SELECT id FROM book WHERE title = 'European History')),
+(1991, 300, '<Translations><Translation Language="Portuguese" Publisher="ABC International" Price="300"/><Translation Language="Chinese" Publisher="ABC International" Price="350"/><Translation Language="Russian" Publisher="ABC International" Price="355"/><Translation Language="Italian" Publisher="ABC International" Price="345"/><Translation Language="Spanish" Publisher="ABC International" Price="335"/></Translations>', (SELECT id FROM book WHERE title = 'Musical Instruments')),
+(2001, 500, '<Translations><Translation Language="Dutch" Publisher="ABC International" Price="510"/><Translation Language="German" Publisher="ABC International" Price="510"/><Translation Language="Spanish" Publisher="ABC International" Price="505"/></Translations>', (SELECT id FROM book WHERE title = 'Musical Instruments')),
+(1996, 400, '<Translations><Translation Language="French" Publisher="ABC International" Price="420"/><Translation Language="German" Publisher="ABC International" Price="400"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth')),
+(1998, 420, '<Translations><Translation Language="French" Publisher="ABC International" Price="430"/><Translation Language="Spanish" Publisher="ABC International" Price="420"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth')),
+(2001, 460, '<Translations><Translation Language="Dutch" Publisher="ABC International" Price="500"/><Translation Language="Danish" Publisher="ABC International" Price="530"/><Translation Language="Italian" Publisher="ABC International" Price="510"/></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth')),
+(2002, 500, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'Oceans on Earth')),
+(2002, 180, '<Translations></Translations>', (SELECT id FROM book WHERE title = 'The Beach House')),
+(1964, 65, '<Translations><Translation Language="English" Publisher="Benton Inc" Price="105"/><Translation Language="Spanish" Price="100"/><Translation Language="Greek" Price="100"/><Translation Language="Italian" Publisher="Aurora Publ." Price="95"/><Translation Language="German" Price="100"/></Translations>', (SELECT id FROM book WHERE title = 'Le chateau de mon pere')),
+(2004, 190, '<Translations><Translation Language="Russian" Publisher="ABC International" Price="190"/></Translations>', (SELECT id FROM book WHERE title = 'Oceanography for Dummies')),
+(2009, 220, '<Translations><Translation Language="Russian" Publisher="ABC International" Price="220"/></Translations>', (SELECT id FROM book WHERE title = 'Oceanography for Dummies'));
+
+
+CREATE TABLE authorship (
+  book INTEGER NOT NULL,
+  author INTEGER NOT NULL,
+  PRIMARY KEY (book, author),
+  FOREIGN KEY (book) REFERENCES book (id),
+  FOREIGN KEY (author) REFERENCES author (id)  
+);
+
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Misty Nights'), (SELECT id FROM author WHERE name = 'John Craft'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Arnie Bastoft'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Meg Gilmand'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Archeology in Egypt'), (SELECT id FROM author WHERE name = 'Chris Ryan'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Alan Griff'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Marty Faust'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Database Systems in Practice'), (SELECT id FROM author WHERE name = 'Celine Biceau'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Contact'), (SELECT id FROM author WHERE name = 'Carl Sagan'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Fourth Star'), (SELECT id FROM author WHERE name = 'Leslie Brenner'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Fifth Star'), (SELECT id FROM author WHERE name = 'Leslie Brenner'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Våren vid sjön'), (SELECT id FROM author WHERE name = 'Marie Franksson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Dödliga Data'), (SELECT id FROM author WHERE name = 'Jakob Hanson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Music Now and Before'), (SELECT id FROM author WHERE name = 'Sam Davis'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Music Now and Before'), (SELECT id FROM author WHERE name = 'Mimi Pappas'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Midsommar i Lund'), (SELECT id FROM author WHERE name = 'Marie Franksson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Encore une fois'), (SELECT id FROM author WHERE name = 'Pierre Zargone'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Carl George'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Peter Feldon'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Lilian Carrera'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Auna Gonzales Perre'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Kostas Andrianos'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Andreas Shultz'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Antje Liedderman'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'European History'), (SELECT id FROM author WHERE name = 'Christina Ohlsen'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Musical Instruments'), (SELECT id FROM author WHERE name = 'Sam Davis'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Musical Instruments'), (SELECT id FROM author WHERE name = 'Alicia Bing'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Linda Evans'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Chuck Morrisson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceans on Earth'), (SELECT id FROM author WHERE name = 'Kay Morrisson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Oceanography for Dummies'), (SELECT id FROM author WHERE name = 'Linda Evans'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Beach House'), (SELECT id FROM author WHERE name = 'James Patterson'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'The Beach House'), (SELECT id FROM author WHERE name = 'Peter de Jonge'));
+INSERT INTO authorship VALUES ((SELECT id FROM book WHERE title = 'Le chateau de mon pere'), (SELECT id FROM author WHERE name = 'Franc Desteille'));
+
+
+CREATE TABLE publisher (
+  name VARCHAR(30) NOT NULL PRIMARY KEY,
+  street VARCHAR(30) NOT NULL,
+  city VARCHAR(20) NOT NULL,
+  postalcode VARCHAR(10) NOT NULL,
+  country VARCHAR(20) NOT NULL
+);
+
+INSERT INTO publisher VALUES 
+('ABC International','7th Bear St.','Berlin','44500','Germany'), 
+('Deutche Ferlage','Frei Strasse 22','Berlin','11123','Germany'), 
+('Addison','2nd Monet St.','Toulouse','98700','France'), 
+('Aurora Publ.','3rd Uffizi Rd.','Florence','49112','Italy'), 
+('Benton Inc','4th Queen Ave.','London','34565','England'),
+('McManus Publishing','124 Main street','London','56411','England'), 
+('Bästa Bok','Bokgatan 9','Stockholm','12309','Sweden'), 
+('EU Publishing','45th Beer St.','Brussels','34990','Belgium'), 
+('KLC','Upplandsv. 1','Uppsala','34067','Sweden'), 
+('Kingsly','98th Waltz St.','Vienna','12369','Austria'), 
+('Pels And Jafs','32nd Lake Ave.','Edinburg','87300','Scotland'), 
+('RP','34th Red Square','Saint Petersburg','34005','Russia'), 
+('SCB','3rd Odengatan','Stockholm','10405','Sweden'), 
+('Shou-Ling','12th Great Wall St.','Shanghai','12333','China'), 
+('Suomi Bookkii','4th Yksi Rd.','Helsinki','12003','Finland'), 
+('Turk And Turk','45th Otoman Ave.','Ankara','23000','Turkey'), 
+('Marco Polo','475 Central Avenue','Saint Petersburg','33701','United States');
+

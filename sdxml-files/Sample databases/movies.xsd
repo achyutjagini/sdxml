@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="Movies" type="MoviesType"/>
+	<complexType name="MoviesType">
+		<sequence>
+			<element name="Movie" type="MovieType" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="MovieType">
+		<sequence>
+			<element name="Actor" type="PersonType" minOccurs="1" maxOccurs="unbounded" />
+			<element name="Director" type="PersonType" minOccurs="1" maxOccurs="1" />
+			<element name="ProductionCompany" type="string" minOccurs="1" maxOccurs="1" />
+		</sequence>
+		<attribute name="Title" type="string" use="required" />
+		<attribute name="Year" type="integer" use="required" />
+	</complexType>
+	<complexType name="PersonType">
+		<attribute name="Name" type="string" use="required" />
+		<attribute name="YearOfBirth" type="integer" use="required" />
+		<attribute name="Country" type="string" use="required" />
+	</complexType>
+</schema>

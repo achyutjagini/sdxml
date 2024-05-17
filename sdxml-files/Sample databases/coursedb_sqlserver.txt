@@ -1,0 +1,99 @@
+﻿CREATE DATABASE kursdb;
+GO
+
+USE kursdb;
+
+CREATE TABLE student (
+  sid integer IDENTITY (1,1) NOT NULL PRIMARY KEY,
+  sname varchar(20) NOT NULL UNIQUE,
+  contact XML NOT NULL
+);
+
+INSERT INTO student (sname, contact) VALUES 
+('Bo Dahl','<contact><phone type="home">163578</phone><phone type="mobile">073564889</phone><address code="16102" city="Bromma"><street>Ahlgatan</street><number>6</number></address></contact>'),
+('Ann Stål','<contact><phone type="home">373789</phone><phone type="mobile">073148964</phone><address code="16429" city="Kista"><street>Lindvägen</street><number>3</number></address></contact>'),
+('Ebba Ryd','<contact><address code="16107" city="Bromma"><street>Ankvägen</street><number>4</number></address></contact>'),
+('Robert Ahl','<contact><phone type="home">123435</phone><phone type="mobile">073552491</phone><address code="16425" city="Kista"><street>Ekvägen</street><number>1</number></address></contact>'),
+('Lars Holm','<contact><phone type="home">203045</phone><address code="16966" city="Solna"><street>Skolgatan</street><number>3</number></address></contact>'),
+('Siw Björk','<contact><phone type="home">452678</phone><address code="16431" city="Kista"><street>Bokvägen</street><number>2</number></address></contact>'),
+('Sigge Ehn','<contact><phone type="home">245578</phone><phone type="mobile">073691934</phone><address code="16429" city="Kista"><street>Bokvägen</street><number>24</number></address></contact>'),
+('Kurt Grahn','<contact><phone type="home">192292</phone><phone type="mobile">073318175</phone><address code="19735" city="Bro"><street>Byvägen</street><number>112</number></address></contact>'),
+('Eva Jung','<contact><phone type="mobile">073559185</phone><address code="16966" city="Solna"><street>Storgatan</street><number>5</number></address></contact>'),
+('Lola Frid','<contact><phone type="home">723384</phone><phone type="mobile">073292612</phone><address code="18754" city="Täby"><street>Lillgatan</street><number>3</number></address></contact>');
+
+CREATE TABLE course (
+  coursecode varchar(6) NOT NULL,
+  coursename varchar(50) NOT NULL,
+  info XML(courseinfo_xsd) NOT NULL,
+  PRIMARY KEY (coursecode),
+  UNIQUE (coursename)
+);
+
+INSERT INTO course VALUES 
+('DBM1','Database Methodology','<info><length>2</length><price>2800</price></info>'),
+('PDBD','Physical Database Design','<info><length>5</length><price>7200</price></info>'),
+('Java1','Java, basic course','<info><length>5</length><price>6700</price></info>'),
+('Java2','Java, advanced course','<info><length>4</length><price>6000</price></info>'),
+('LDBD','Logical Database Design','<info><length>4</length><price>6000</price></info>'),
+('Log1','Logic','<info><length>3</length><price>4500</price></info>');
+
+CREATE TABLE teacher (
+  tid integer IDENTITY(1,1) NOT NULL ,
+  tname varchar(20) NOT NULL UNIQUE,
+  office integer NOT NULL,
+  phone varchar(10) NOT NULL,
+  PRIMARY KEY (tid)
+);
+
+INSERT INTO teacher(tname,office,phone) VALUES 
+('Anders Ödman',634,'151576'),
+('Bo Åkerman',604,'151526'),
+('Carl Nordin',603,'151553'),
+('Lena Svensson',605,'151556'),
+('Sofia Wilsson',622,'151585');
+
+CREATE TABLE room (
+  name varchar(10) NOT NULL,
+  capacity integer NOT NULL,
+  PRIMARY KEY (name)
+);
+
+INSERT INTO room VALUES ('Jupiter',12),('Orion',24),('Sirius',16),('Tellus',32);
+
+CREATE TABLE courseoffering (
+  startdate date NOT NULL,
+  course varchar(6) NOT NULL,
+  teacher integer NOT NULL,
+  room varchar(10) NOT NULL,
+  PRIMARY KEY (startdate,course),
+  CONSTRAINT courseoffering_ibfk_1 FOREIGN KEY (course) REFERENCES course (coursecode),
+  CONSTRAINT courseoffering_ibfk_2 FOREIGN KEY (teacher) REFERENCES teacher (tid),
+  CONSTRAINT courseoffering_ibfk_3 FOREIGN KEY (room) REFERENCES room (name)
+);
+
+INSERT INTO courseoffering VALUES ('2008-03-06','Java1',2,'Tellus'),
+('2008-04-02','DBM1',5,'Sirius'),('2008-04-16','Java2',2,'Orion'),
+('2008-04-16','Log1',3,'Jupiter'),('2008-05-06','Java1',2,'Jupiter'),
+('2008-05-06','LDBD',5,'Sirius'),('2008-05-09','PDBD',4,'Jupiter'),
+('2008-09-02','Java1',3,'Tellus'),('2008-09-02','LDBD',4,'Orion'),
+('2009-01-22','Java2',2,'Orion'),('2009-01-28','DBM1',5,'Jupiter');
+
+CREATE TABLE participation (
+  startdate date NOT NULL,
+  course varchar(6) NOT NULL,
+  student integer NOT NULL,
+  PRIMARY KEY (startdate,course,student),
+  CONSTRAINT participation_ibfk_1 FOREIGN KEY (startdate,course) REFERENCES courseoffering (startdate,course),
+  CONSTRAINT participation_ibfk_2 FOREIGN KEY (student) REFERENCES student (sid)
+);
+
+INSERT INTO participation VALUES ('2008-03-06','Java1',1),('2008-04-02','DBM1',1),
+('2008-05-06','LDBD',1),('2008-09-02','Java1',1),('2008-04-02','DBM1',2),
+('2008-05-06','Java1',2),('2009-01-22','Java2',2),('2008-03-06','Java1',3),
+('2008-04-02','DBM1',3),('2009-01-28','DBM1',3),('2008-04-16','Log1',4),
+('2008-04-16','Java2',5),('2008-04-16','Log1',5),('2009-01-28','DBM1',5),
+('2008-04-16','Java2',6),('2008-05-06','Java1',6),('2008-05-09','PDBD',6),
+('2008-09-02','LDBD',6),('2008-04-16','Java2',7),('2008-05-06','LDBD',7),
+('2008-03-06','Java1',8),('2008-05-09','PDBD',8),('2008-09-02','LDBD',8),
+('2008-03-06','Java1',9),('2008-09-02','Java1',9),('2009-01-22','Java2',9),
+('2008-03-06','Java1',10),('2008-04-02','DBM1',10),('2009-01-22','Java2',10);

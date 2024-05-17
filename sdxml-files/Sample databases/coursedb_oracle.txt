@@ -1,0 +1,145 @@
+﻿--Set the deferred segment creation to false so that the sequences can work correctly
+ALTER SYSTEM SET deferred_segment_creation=false;
+
+--Create a user in order to get a schema for the tables. Must start with c## in Oracle Database 21c.
+CREATE USER c##coursedb IDENTIFIED BY abc123;
+
+--Give permissions to the schema so that the tables can be created
+GRANT RESOURCE TO c##coursedb;
+GRANT UNLIMITED TABLESPACE TO c##coursedb;
+
+--Change the default schema so that we don't have to prefix everything with "c##coursedb." 
+ALTER SESSION SET CURRENT_SCHEMA=c##coursedb;
+
+CREATE SEQUENCE student_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE student (
+  sid integer NOT NULL PRIMARY KEY,
+  sname varchar2(20) NOT NULL UNIQUE,
+  contact XMLTYPE NOT NULL
+);
+
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Bo Dahl','<contact><phone type="home">163578</phone><phone type="mobile">073564889</phone><address code="16102" city="Bromma"><street>Ahlgatan</street><number>6</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Ann Stål','<contact><phone type="home">373789</phone><phone type="mobile">073148964</phone><address code="16429" city="Kista"><street>Lindvägen</street><number>3</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Ebba Ryd','<contact><address code="16107" city="Bromma"><street>Ankvägen</street><number>4</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Robert Ahl','<contact><phone type="home">123435</phone><phone type="mobile">073552491</phone><address code="16425" city="Kista"><street>Ekvägen</street><number>1</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Lars Holm','<contact><phone type="home">203045</phone><address code="16966" city="Solna"><street>Skolgatan</street><number>3</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Siw Björk','<contact><phone type="home">452678</phone><address code="16431" city="Kista"><street>Bokvägen</street><number>2</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Sigge Ehn','<contact><phone type="home">245578</phone><phone type="mobile">073691934</phone><address code="16429" city="Kista"><street>Bokvägen</street><number>24</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Kurt Grahn','<contact><phone type="home">192292</phone><phone type="mobile">073318175</phone><address code="19735" city="Bro"><street>Byvägen</street><number>112</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Eva Jung','<contact><phone type="mobile">073559185</phone><address code="16966" city="Solna"><street>Storgatan</street><number>5</number></address></contact>');
+INSERT INTO student VALUES 
+(student_id_seq.nextval,'Lola Frid','<contact><phone type="home">723384</phone><phone type="mobile">073292612</phone><address code="18754" city="Täby"><street>Lillgatan</street><number>3</number></address></contact>');
+
+CREATE TABLE course (
+  coursecode varchar2(6) NOT NULL,
+  coursename varchar2(50) NOT NULL,
+  info XMLTYPE NOT NULL,
+  PRIMARY KEY (coursecode),
+  UNIQUE (coursename)
+);
+
+INSERT INTO course VALUES ('DBM1','Database Methodology','<info><length>2</length><price>2800</price></info>');
+INSERT INTO course VALUES ('PDBD','Physical Database Design','<info><length>5</length><price>7200</price></info>');
+INSERT INTO course VALUES ('Java1','Java, basic course','<info><length>5</length><price>6700</price></info>');
+INSERT INTO course VALUES ('Java2','Java, advanced course','<info><length>4</length><price>6000</price></info>');
+INSERT INTO course VALUES ('LDBD','Logical Database Design','<info><length>4</length><price>6000</price></info>');
+INSERT INTO course VALUES ('Log1','Logic','<info><length>3</length><price>4500</price></info>');
+
+CREATE SEQUENCE teacher_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE TABLE teacher (
+  tid integer NOT NULL,
+  tname varchar2(20) NOT NULL UNIQUE,
+  office integer NOT NULL,
+  phone varchar2(10) NOT NULL,
+  PRIMARY KEY (tid)
+);
+
+INSERT INTO teacher VALUES (teacher_id_seq.nextval,'Anders Ödman',634,'151576');
+INSERT INTO teacher VALUES (teacher_id_seq.nextval,'Bo Åkerman',604,'151526');
+INSERT INTO teacher VALUES (teacher_id_seq.nextval,'Carl Nordin',603,'151553');
+INSERT INTO teacher VALUES (teacher_id_seq.nextval,'Lena Svensson',605,'151556');
+INSERT INTO teacher VALUES (teacher_id_seq.nextval,'Sofia Wilsson',622,'151585');
+
+CREATE TABLE room (
+  name varchar(10) NOT NULL,
+  capacity integer NOT NULL,
+  PRIMARY KEY (name)
+);
+
+INSERT INTO room VALUES ('Jupiter',12);
+INSERT INTO room VALUES ('Orion',24);
+INSERT INTO room VALUES ('Sirius',16);
+INSERT INTO room VALUES ('Tellus',32);
+
+CREATE TABLE courseoffering (
+  startdate date NOT NULL,
+  course varchar2(6) NOT NULL,
+  teacher integer NOT NULL,
+  room varchar2(10) NOT NULL,
+  PRIMARY KEY (startdate,course),
+  CONSTRAINT courseoffering_ibfk_1 FOREIGN KEY (course) REFERENCES course (coursecode),
+  CONSTRAINT courseoffering_ibfk_2 FOREIGN KEY (teacher) REFERENCES teacher (tid),
+  CONSTRAINT courseoffering_ibfk_3 FOREIGN KEY (room) REFERENCES room (name)
+);
+
+INSERT INTO courseoffering VALUES ('2008-03-06','Java1',2,'Tellus');
+INSERT INTO courseoffering VALUES ('2008-04-02','DBM1',5,'Sirius');
+INSERT INTO courseoffering VALUES ('2008-04-16','Java2',2,'Orion');
+INSERT INTO courseoffering VALUES ('2008-04-16','Log1',3,'Jupiter');
+INSERT INTO courseoffering VALUES ('2008-05-06','Java1',2,'Jupiter');
+INSERT INTO courseoffering VALUES ('2008-05-06','LDBD',5,'Sirius');
+INSERT INTO courseoffering VALUES ('2008-05-09','FDBD',4,'Jupiter');
+INSERT INTO courseoffering VALUES ('2008-09-02','Java1',3,'Tellus');
+INSERT INTO courseoffering VALUES ('2008-09-02','LDBD',4,'Orion');
+INSERT INTO courseoffering VALUES ('2009-01-22','Java2',2,'Orion');
+INSERT INTO courseoffering VALUES ('2009-01-28','DBM1',5,'Jupiter');
+
+CREATE TABLE participation (
+  startdate date NOT NULL,
+  course varchar2(6) NOT NULL,
+  student integer NOT NULL,
+  PRIMARY KEY (startdate,course,student),
+  CONSTRAINT participation_ibfk_1 FOREIGN KEY (startdate,course) REFERENCES courseoffering (startdate,course),
+  CONSTRAINT participation_ibfk_2 FOREIGN KEY (student) REFERENCES student (sid)
+);
+
+INSERT INTO participation VALUES ('2008-03-06','Java1',1);
+INSERT INTO participation VALUES ('2008-04-02','DBM1',1);
+INSERT INTO participation VALUES ('2008-05-06','LDBD',1);
+INSERT INTO participation VALUES ('2008-09-02','Java1',1);
+INSERT INTO participation VALUES ('2008-04-02','DBM1',2);
+INSERT INTO participation VALUES ('2008-05-06','Java1',2);
+INSERT INTO participation VALUES ('2009-01-22','Java2',2);
+INSERT INTO participation VALUES ('2008-03-06','Java1',3);
+INSERT INTO participation VALUES ('2008-04-02','DBM1',3);
+INSERT INTO participation VALUES ('2009-01-28','DBM1',3);
+INSERT INTO participation VALUES ('2008-04-16','Log1',4);
+INSERT INTO participation VALUES ('2008-04-16','Java2',5);
+INSERT INTO participation VALUES ('2008-04-16','Log1',5);
+INSERT INTO participation VALUES ('2009-01-28','DBM1',5);
+INSERT INTO participation VALUES ('2008-04-16','Java2',6);
+INSERT INTO participation VALUES ('2008-05-06','Java1',6);
+INSERT INTO participation VALUES ('2008-05-09','FDBD',6);
+INSERT INTO participation VALUES ('2008-09-02','LDBD',6);
+INSERT INTO participation VALUES ('2008-04-16','Java2',7);
+INSERT INTO participation VALUES ('2008-05-06','LDBD',7);
+INSERT INTO participation VALUES ('2008-03-06','Java1',8);
+INSERT INTO participation VALUES ('2008-05-09','FDBD',8);
+INSERT INTO participation VALUES ('2008-09-02','LDBD',8);
+INSERT INTO participation VALUES ('2008-03-06','Java1',9);
+INSERT INTO participation VALUES ('2008-09-02','Java1',9);
+INSERT INTO participation VALUES ('2009-01-22','Java2',9);
+INSERT INTO participation VALUES ('2008-03-06','Java1',10);
+INSERT INTO participation VALUES ('2008-04-02','DBM1',10);
+INSERT INTO participation VALUES ('2009-01-22','Java2',10);

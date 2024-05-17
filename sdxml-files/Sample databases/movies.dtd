@@ -1,0 +1,16 @@
+<!ELEMENT Movies (Movie+)>
+<!ELEMENT Movie (Actor+, Director, ProductionCompany)>
+<!ATTLIST Movie 
+          Title CDATA #REQUIRED
+          Year CDATA #REQUIRED>
+<!ELEMENT Actor EMPTY>
+<!ATTLIST Actor 
+          Name CDATA #REQUIRED
+          YearOfBirth CDATA #REQUIRED
+          Country CDATA #REQUIRED>
+<!ELEMENT Director EMPTY>
+<!ATTLIST Director 
+          Name CDATA #REQUIRED
+          YearOfBirth CDATA #REQUIRED
+          Country CDATA #REQUIRED>
+<!ELEMENT ProductionCompany (#PCDATA)>
