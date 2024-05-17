@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="report.xsl"?>
+<rapport datum="2024-05-13" bedömare="nikos dimitrakas" termin="VT2024">
+	<grupp nummer="9">
+		<medlem>Achyut Jagini</medlem>
+		<medlem>Ashan Thotawatta</medlem>
+		<medlem>Kalana Sachith Mahaarachchi</medlem>
+	</grupp>
+	<inlupp>4</inlupp>
+	<uppgift nummer="1">OK</uppgift>
+	<uppgift nummer="2">The three nested predicates could be one predicate. Why do you create a new element Translation to put the language inside? Can you not just return the languages as a sequence of literals? Is the condition in the where clause correct?</uppgift>
+	<uppgift nummer="3">Again with the nested predicates.</uppgift>
+	<uppgift nummer="4">OK</uppgift>
+	<uppgift nummer="5">OK</uppgift>
+	<resultat bedömning="Pass"/>
+</rapport>

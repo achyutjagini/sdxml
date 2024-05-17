@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="report.xsl"?>
+<rapport datum="2024-04-26" bedömare="nikos dimitrakas" termin="VT2024">
+	<grupp nummer="9">
+		<medlem>Achyut Jagini</medlem>
+		<medlem>Ashan Thotawatta</medlem>
+		<medlem>Kalana Sachith Mahaarachchi</medlem>
+	</grupp>
+	<inlupp>2</inlupp>
+	<uppgift nummer="1">
+		<del namn="XSLT 1">When you are working with a movie in the second template, why are you looking for it relative to the root based on the title in order to find the actors? The right movie is already the current node.</del>
+		<del namn="XSLT 2/3">Is this the same as the XSLT 1 solution? I don't see any XSLT 2 or 3 feature.</del>
+	</uppgift>
+	<uppgift nummer="2">
+		<del namn="XSLT 1">You are using the function current() unnecessarily. The movie year could have been retrieved from the Actor element's parent (the Movie element) instead of being sent to the template as a parameter.</del>
+		<del namn="XSLT 2/3">Same improvement possibilities as with XSLT 1 solution.</del>
+	</uppgift>
+	<uppgift nummer="3">
+		<del namn="XSLT 1">You are using the function current() unnecessarily a couple of times.</del>
+		<del namn="XSLT 2/3">You can find the current director's name with a simpler expression if you start from the current-group().</del>
+	</uppgift>
+	<resultat bedömning="Pass"/>
+</rapport>
+

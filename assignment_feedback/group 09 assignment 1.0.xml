@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="report.xsl"?>
+<rapport datum="2024-04-18" bedömare="nikos dimitrakas" termin="VT2024">
+	<grupp nummer="9">
+		<medlem>Achyut Jagini</medlem>
+		<medlem>Ashan Thotawatta</medlem>
+		<medlem>Kalana Sachith Mahaarachchi</medlem>
+	</grupp>
+	<inlupp>1</inlupp>
+	<uppgift nummer="1">
+		<del namn="XQuery 1">The expression inside the second distinct-values can be simplified.</del>
+		<del namn="XQuery 3">Why create the element Person?</del>
+	</uppgift>
+	<uppgift nummer="2">
+		<del namn="XQuery 1">Wrong case in element names.</del>
+		<del namn="XQuery 3">Wrong case in element names. Confusing variable name $ag.</del>
+	</uppgift>
+	<uppgift nummer="3">
+		<del namn="XQuery 1">You should be able to simplify your solution by not starting from the root so many times. Some attributes could have been reused since they had the same name.</del>
+		<del namn="XQuery 3">Very similar to the XQuery 1 solution. Perhaps a group by would have helped simplify the solution.</del>
+	</uppgift>
+	<uppgift nummer="4">
+		<del namn="XQuery 1">The function data inside the count is unnecessary.</del>
+		<del namn="XQuery 3">OK</del>
+	</uppgift>
+	<uppgift nummer="5">
+		<del namn="XQuery 1">Confusing variable name $director. The new movie title is incorrent.</del>
+		<del namn="XQuery 3">OK</del>
+	</uppgift>
+	<resultat bedömning="Pass"/>
+</rapport>

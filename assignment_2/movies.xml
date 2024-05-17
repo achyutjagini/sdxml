@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Movies>
+<Movies>
+	<Movie Title="Driven" Year="2001">
+		<Actor Name="Burt Reynolds" YearOfBirth="1936" Country="USA"/>
+		<Actor Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<Actor Name="Kip Pardue" YearOfBirth="1976" Country="Canada"/>
+		<Director Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<ProductionCompany>Tri-Star</ProductionCompany>
+	</Movie>
+	<Movie Title="Antz" Year="1998">
+		<Actor Name="Woody Allen" YearOfBirth="1935" Country="USA"/>
+		<Actor Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Director Name="Eric Darnell" YearOfBirth="1961" Country="Ireland"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="The Muse" Year="1999">
+		<Actor Name="Andie MacDowell" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="Jeff Bridges" YearOfBirth="1949" Country="USA"/>
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Director Name="Pitof" YearOfBirth="1970" Country="France"/>
+		<ProductionCompany>October Films</ProductionCompany>
+	</Movie>
+	<Movie Title="End Game" Year="2006">
+		<Actor Name="James Woods" YearOfBirth="1955" Country="USA"/>
+		<Actor Name="Cuba Gooding Jr" YearOfBirth="1968" Country="USA"/>
+		<Director Name="Andy Cheng" YearOfBirth="1972" Country="China"/>
+		<ProductionCompany>Millennium Films</ProductionCompany>
+	</Movie>
+	<Movie Title="Picking Up the Pieces" Year="2000">
+		<Actor Name="Woody Allen" YearOfBirth="1935" Country="USA"/>
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="Alfonso Arau" YearOfBirth="1948" Country="USA"/>
+		<Director Name="Eric Darnell" YearOfBirth="1961" Country="Ireland"/>
+		<ProductionCompany>Tri-Star</ProductionCompany>
+	</Movie>
+	<Movie Title="Anything Else" Year="2003">
+		<Actor Name="Woody Allen" YearOfBirth="1935" Country="USA"/>
+		<Actor Name="Jason Biggs" YearOfBirth="1978" Country="USA"/>
+		<Actor Name="Christina Ricci" YearOfBirth="1980" Country="USA"/>
+		<Director Name="Woody Allen" YearOfBirth="1935" Country="USA"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="Catwoman" Year="2004">
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="Halle Berry" YearOfBirth="1966" Country="USA"/>
+		<Director Name="Pitof" YearOfBirth="1970" Country="France"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="The Specialist" Year="1994">
+		<Actor Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="James Woods" YearOfBirth="1955" Country="USA"/>
+		<Director Name="Eric Darnell" YearOfBirth="1961" Country="Ireland"/>
+		<ProductionCompany>Tri-Star</ProductionCompany>
+	</Movie>
+	<Movie Title="Sliver" Year="1993">
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="William Baldwin" YearOfBirth="1963" Country="USA"/>
+		<Actor Name="Tom Berenger" YearOfBirth="1949" Country="USA"/>
+		<Director Name="Phillip Noyce" YearOfBirth="1950" Country="Australia"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="Last Action Hero" Year="1993">
+		<Actor Name="Sharon Stone" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="Arnold Schwarzenegger" YearOfBirth="1947" Country="Austria"/>
+		<Director Name="John McTiernan" YearOfBirth="1951" Country="USA"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="The Saint" Year="1997">
+		<Actor Name="Val Kilmer" YearOfBirth="1959" Country="USA"/>
+		<Actor Name="Elisabeth Shue" YearOfBirth="1963" Country="USA"/>
+		<Director Name="Phillip Noyce" YearOfBirth="1950" Country="Australia"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="Hide and Seek" Year="2005">
+		<Actor Name="Robert De Niro" YearOfBirth="1943" Country="USA"/>
+		<Actor Name="Dakota Fanning" YearOfBirth="1994" Country="USA"/>
+		<Actor Name="Famke Janssen" YearOfBirth="1964" Country="Netherlands"/>
+		<Actor Name="Elisabeth Shue" YearOfBirth="1963" Country="USA"/>
+		<Director Name="John Polson" YearOfBirth="1965" Country="Australia"/>
+		<ProductionCompany>20th Century Fox</ProductionCompany>
+	</Movie>
+	<Movie Title="Demolition Man" Year="1993">
+		<Actor Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<Actor Name="Wesley Snipes" YearOfBirth="1962" Country="USA"/>
+		<Actor Name="Sandra Bullock" YearOfBirth="1964" Country="USA"/>
+		<Actor Name="Hiro Kanagawa" YearOfBirth="1963" Country="Japan"/>
+		<Director Name="Marco Brambilla" YearOfBirth="1960" Country="Italy"/>
+		<ProductionCompany>Warner Bros</ProductionCompany>
+	</Movie>
+	<Movie Title="Excess Baggage" Year="1997">
+		<Actor Name="Alicia Silverstone" YearOfBirth="1976" Country="USA"/>
+		<Actor Name="Benicio Del Toro" YearOfBirth="1967" Country="Puerto Rico"/>
+		<Actor Name="Hiro Kanagawa" YearOfBirth="1963" Country="Japan"/>
+		<Director Name="Marco Brambilla" YearOfBirth="1960" Country="Italy"/>
+		<ProductionCompany>Warner Bros</ProductionCompany>
+	</Movie>
+	<Movie Title="The 6th Day" Year="2000">
+		<Actor Name="Arnold Schwarzenegger" YearOfBirth="1947" Country="Austria"/>
+		<Actor Name="Hiro Kanagawa" YearOfBirth="1963" Country="Japan"/>
+		<Actor Name="Robert Duvall" YearOfBirth="1931" Country="USA"/>
+		<Director Name="Roger Spottiswoode" YearOfBirth="1945" Country="Canada"/>
+		<ProductionCompany>Phoenix Pictures</ProductionCompany>
+	</Movie>
+	<Movie Title="Cliffhanger" Year="1993">
+		<Actor Name="Silvester Stallone" YearOfBirth="1946" Country="USA"/>
+		<Director Name="Renny Harlin" YearOfBirth="1960" Country="Italy"/>
+		<ProductionCompany>Warner Bros</ProductionCompany>
+	</Movie>
+	<Movie Title="The Kid And I" Year="1993">
+		<Actor Name="Tom Arnold" YearOfBirth="1959" Country="USA"/>
+		<Actor Name="Arnold Schwarzenegger" YearOfBirth="1947" Country="Austria"/>
+		<Director Name="Penelope Spheeris" YearOfBirth="1945" Country="USA"/>
+		<ProductionCompany>Universal</ProductionCompany>
+	</Movie>
+	<Movie Title="True Lies" Year="1994">
+		<Actor Name="Tom Arnold" YearOfBirth="1959" Country="USA"/>
+		<Actor Name="Jamie Lee Curtis" YearOfBirth="1958" Country="USA"/>
+		<Actor Name="Arnold Schwarzenegger" YearOfBirth="1947" Country="Austria"/>
+		<Actor Name="Eliza Dushku" YearOfBirth="1980" Country="USA"/>
+		<Director Name="James Cameron" YearOfBirth="1954" Country="Canada"/>
+		<ProductionCompany>Tri-Star</ProductionCompany>
+	</Movie>
+</Movies>

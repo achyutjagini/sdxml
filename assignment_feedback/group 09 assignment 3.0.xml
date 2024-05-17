@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="report.xsl"?>
+<rapport datum="2024-05-07" bedömare="nikos dimitrakas" termin="VT2024">
+	<grupp nummer="9">
+		<medlem>Achyut Jagini</medlem>
+		<medlem>Ashan Thotawatta</medlem>
+		<medlem>Kalana Sachith Mahaarachchi</medlem>
+	</grupp>
+	<inlupp>3</inlupp>
+	<uppgift nummer="1">OK</uppgift>
+	<uppgift nummer="2">OK</uppgift>
+	<uppgift nummer="3">OK</uppgift>
+	<uppgift nummer="4">OK</uppgift>
+	<uppgift nummer="5">You are counting participations/course offerings, not courses.</uppgift>
+	<uppgift nummer="6">The table CourseOffering is not necessary since you can find the course from the participation.</uppgift>
+	<resultat bedömning="Pass"/>
+</rapport>
